@@ -10,6 +10,9 @@ import Animated, {
 
 const CARD_HEIGHT = height * 0.6 + 40;
 
+//delete folowwing
+const someValue = 45;
+
 const AnimatedCard = ({data, index, scrollPosition}) => {
   const animation = useDerivedValue(() => {
     return index - scrollPosition.value;
