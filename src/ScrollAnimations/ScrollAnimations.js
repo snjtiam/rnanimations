@@ -1,28 +1,37 @@
-import {View, Text, ScrollView} from 'react-native';
+import {View} from 'react-native';
 import React from 'react';
-import {height, width} from '../utils';
+import AnimatedCard, {CARD_HEIGHT} from '../components/AnimatedCard';
+import useScrollAnimation from './ScrollAnimationsController';
+import Animated from 'react-native-reanimated';
+import {data} from './data';
 
 const ScrollAnimations = () => {
+  const {animatedRef, scrollPosition, snapPoints} = useScrollAnimation({
+    animatedComponentHeight: CARD_HEIGHT,
+  });
+
   return (
-    <View style={{flex: 1, backgroundColor: 'black'}}>
-      <ScrollView
-        style={{flex: 1}}
-        contentContainerStyle={{alignItems: 'center', paddingVertical: 25}}>
-        {Array(10)
-          .fill(0)
-          .map((_, index) => (
-            <View
-              key={index + 'key'}
-              style={{
-                height: height * 0.85,
-                width: width * 0.9,
-                backgroundColor: 'pink',
-                marginVertical: 20,
-                borderRadius: 20,
-              }}
-            />
-          ))}
-      </ScrollView>
+    <View style={{flex: 1, backgroundColor: 'white'}}>
+      <Animated.ScrollView
+        contentContainerStyle={{
+          alignItems: 'center',
+          paddingBottom: 200,
+          paddingTop: 100,
+        }}
+        decelerationRate={'fast'}
+        ref={animatedRef}
+        scrollEventThrottle={1}
+        snapToOffsets={snapPoints}
+        style={{flex: 1}}>
+        {data.map((item, index) => (
+          <AnimatedCard
+            key={index + 'key'}
+            data={item}
+            index={index}
+            scrollPosition={scrollPosition}
+          />
+        ))}
+      </Animated.ScrollView>
     </View>
   );
 };
